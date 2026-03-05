@@ -18,7 +18,29 @@ const app = new Elysia()
       })
     }
   )
+
+  .get(
+    "/products/:id",
+    ({ params, query }) => {
+      return {
+        message: "Success",
+        data: {
+          productId: params.id,
+          sortBy: query.sort || "asc",
+        },
+      };
+    },
+    {
+      params: t.Object({
+        id: t.Number(),
+      }),
+      query: t.Object({
+        sort: t.Optional(t.Union([t.Literal("asc"), t.Literal("desc")])),
+      }),
+    }
+  )
+
   .listen(3000);
 
-  
+
 console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);
