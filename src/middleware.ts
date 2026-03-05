@@ -95,6 +95,45 @@ app.get("/profile", () => ({
  name: "Nama kamu"
 }))
 
+app.post(
+ "/register",
+ ({ body }) => body,
+ {
+   body: t.Object({
+     name: t.String({ minLength: 3 }),
+     email: t.String({ format: "email" })
+   })
+ }
+)
+
+
+app.onError(({ code, error, set }) => {
+
+
+ if (code === "VALIDATION") {
+   set.status = 400
+   return {
+     success: false,
+     message: "Validation Error",
+     detail: error.message
+   }
+ }
+
+
+ if (code === "NOT_FOUND") {
+   set.status = 404
+   return {
+     message: "Route not found"
+   }
+ }
+
+
+ set.status = 500
+ return {
+   message: "Internal Server Error"
+ }
+})
+
   .listen(3000);
 
 
