@@ -81,12 +81,15 @@ const app = new Elysia()
 )
 
 app.onAfterHandle(({ response }) => {
- return {
-   success: true,
-   data: response
- }
-})
-
+    return {
+      success: true,
+      Message: "data tersedia",
+      data: response
+    };
+  })
+  .get("/product", () => {
+    return { id: 1, name: "Laptop" };
+  })
 
 app.get("/profile", () => ({
  name: "Nama kamu"
