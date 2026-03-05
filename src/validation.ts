@@ -40,6 +40,23 @@ const app = new Elysia()
     }
   )
 
+  .get(
+    "/ping",
+    () => {
+      return {
+        success: true,
+        message: "Server OK",
+      };
+    },
+    {
+      response: t.Object({
+        success: t.Boolean(),
+        message: t.String(),
+      }),
+    }
+  )
+
+
   .listen(3000);
 
 
